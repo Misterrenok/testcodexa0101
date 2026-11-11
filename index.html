@@ -53,11 +53,79 @@
     .trust{margin-top:14px;display:flex;align-items:center;justify-content:center;gap:7px;color:#9d9295;font-size:11px}
     .trust-dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
     @media(max-width:420px){body{padding:18px}.card{padding:27px 18px 21px;border-radius:29px}h1{font-size:41px}.sub{font-size:18px}.btn{font-size:18px;min-height:62px}}
+
+    /* Decorations and snowfall are exclusive to ?p=kokina. */
+    .holiday-decor{display:none;position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none;z-index:0}
+    body.is-kokina .holiday-decor{display:block}
+    .holiday-decor svg{position:absolute;display:block}
+    .holiday-tl{width:128px;top:-5px;left:-5px}
+    .holiday-tr{width:118px;top:0;right:-4px}
+    .holiday-bl{width:118px;bottom:-2px;left:-7px}
+    .holiday-br{width:110px;bottom:-3px;right:-4px}
+    body.is-kokina .card{background:linear-gradient(145deg,#fff9f9 0%,#fff 53%,#fff9f7 100%);box-shadow:0 24px 65px rgba(104,50,59,.15)}
+    .snowfall{display:none;position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden}
+    body.is-kokina .snowfall{display:block}
+    .snowflake{position:absolute;top:-14vh;left:var(--x);width:var(--size);height:var(--size);border-radius:50%;background:rgba(255,255,255,.96);box-shadow:0 0 2px rgba(104,76,84,.25),0 0 7px rgba(255,255,255,.8);opacity:var(--opacity);animation:snowfall var(--duration) linear var(--delay) infinite}
+    @keyframes snowfall{to{transform:translate3d(var(--drift),118vh,0)}}
+    @media(max-width:420px){
+      .holiday-tl{width:100px}.holiday-tr{width:98px}
+      .holiday-bl{width:93px}.holiday-br{width:90px}
+    }
+    @media(prefers-reduced-motion:reduce){.snowflake{animation:none;display:none}}
   </style>
 </head>
 <body>
   <main class="shell">
     <section class="card" id="card">
+
+      <div class="holiday-decor" aria-hidden="true">
+        <!-- Evergreen sprig, holly berries and red ribbon -->
+        <svg class="holiday-tl" viewBox="0 0 150 145" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke="#365b43" stroke-width="3.3" stroke-linecap="round">
+            <path d="M0 18C30 19 59 47 92 83M10 0C41 27 66 50 95 84M0 54C30 51 60 64 92 84"/>
+            <path d="M9 26L3 2M18 33L26 6M27 41L14 10M40 49L49 21M50 56L35 29M61 65L76 40M71 74L52 50M5 53L21 34M20 59L34 38M36 65L49 44M52 73L62 56M60 23L52 1M70 33L85 14"/>
+          </g>
+          <g fill="#a32f43" stroke="#80283b" stroke-width="1.6">
+            <circle cx="44" cy="61" r="10"/><circle cx="61" cy="65" r="9"/><circle cx="50" cy="78" r="9"/><circle cx="71" cy="79" r="7"/>
+          </g>
+          <path d="M83 87Q53 63 58 102Q80 106 85 91Q110 65 120 94Q105 107 89 94L94 98L111 131L86 119L74 136L80 101Z" fill="#b73e51" stroke="#842538" stroke-width="2"/>
+          <ellipse cx="85" cy="93" rx="7" ry="6" fill="#9e3046"/>
+          <g fill="white" opacity=".65"><circle cx="41" cy="57" r="2.5"/><circle cx="58" cy="61" r="2"/></g>
+        </svg>
+        <!-- Hanging baubles in the top-right corner -->
+        <svg class="holiday-tr" viewBox="0 0 125 160" xmlns="http://www.w3.org/2000/svg">
+          <path d="M46 0V52M88 0V79" stroke="#b18b65" stroke-width="2"/>
+          <rect x="40" y="50" width="12" height="7" rx="2" fill="#b89461"/><rect x="82" y="77" width="12" height="7" rx="2" fill="#b89461"/>
+          <circle cx="46" cy="77" r="25" fill="#b13246"/><circle cx="88" cy="106" r="24" fill="#f3e7d6" stroke="#d2ab80" stroke-width="1.8"/>
+          <path d="M46 62V92M31 77H61M35 66L57 88M57 66L35 88" stroke="#fff" stroke-width="2.7" stroke-linecap="round"/>
+          <path d="M80 86C93 100 93 110 80 127M96 86C109 102 108 113 96 127" fill="none" stroke="#d6ac71" stroke-width="4"/>
+          <circle cx="39" cy="67" r="5" fill="#fff" opacity=".28"/>
+        </svg>
+        <!-- Lantern, pine branches and snow at bottom-left -->
+        <svg class="holiday-bl" viewBox="0 0 145 128" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 119Q40 103 89 120L145 126" fill="none" stroke="#d3dbd6" stroke-width="7"/>
+          <g stroke="#315b42" stroke-width="3" stroke-linecap="round">
+            <path d="M0 116L89 98M13 111L4 90M24 108L14 83M36 105L26 82M49 102L40 80M61 100L53 78M72 98L65 80M17 111L27 91M35 108L44 90M53 105L61 88M70 102L78 88"/>
+          </g>
+          <rect x="25" y="34" width="57" height="76" rx="7" fill="#7f3a36" stroke="#612b2c" stroke-width="3"/>
+          <rect x="34" y="43" width="40" height="58" fill="#fff4d9" stroke="#d4a178" stroke-width="3"/>
+          <path d="M54 40V106M36 79H73" stroke="#8c4035" stroke-width="3"/>
+          <path d="M54 88Q45 78 54 67Q65 79 54 88" fill="#e3a54e"/>
+          <path d="M41 34Q53 10 67 34" fill="none" stroke="#6b3837" stroke-width="4"/>
+          <path d="M22 111H85" stroke="#6b3837" stroke-width="6" stroke-linecap="round"/>
+          <g fill="#fff"><circle cx="8" cy="100" r="3"/><circle cx="100" cy="113" r="4"/><circle cx="117" cy="119" r="3"/></g>
+        </svg>
+        <!-- Wrapped present and holly at bottom-right -->
+        <svg class="holiday-br" viewBox="0 0 142 130" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 120Q48 112 142 124" fill="none" stroke="#e9ded9" stroke-width="8"/>
+          <rect x="29" y="64" width="89" height="54" rx="6" fill="#d8b48f" stroke="#af8c6c" stroke-width="2"/>
+          <path d="M73 64V118M29 90H118" stroke="#aa3548" stroke-width="12"/>
+          <path d="M73 66Q33 64 45 48Q55 39 73 66Q101 36 114 50Q118 64 73 66" fill="#b13a4e" stroke="#8d2c40" stroke-width="2"/>
+          <path d="M78 56Q91 24 123 27Q109 58 78 56M82 53Q92 19 63 13Q56 41 82 53" fill="#3b6949" stroke="#27553a" stroke-width="2"/>
+          <circle cx="96" cy="55" r="7" fill="#b63449"/><circle cx="107" cy="59" r="7" fill="#a82940"/><circle cx="99" cy="66" r="7" fill="#c44553"/>
+          <path d="M12 115Q26 98 34 114" fill="none" stroke="#446e4b" stroke-width="4"/>
+        </svg>
+      </div>
       <div class="content">
         <div class="brand">✦ ŞÖNİL HOBİ KİTİ ✦</div>
         <h1 id="title">LAVANTA<br>BUKETİ</h1>
@@ -85,6 +153,8 @@
       </div>
     </section>
   </main>
+
+  <div class="snowfall" id="snowfall" aria-hidden="true"></div>
   <script>
     const products = {
       kokina: {
@@ -122,6 +192,24 @@
     };
     const key = new URLSearchParams(location.search).get("p") || "lavanta";
     const p = products[key] || products.lavanta;
+
+    if (key === "kokina") {
+      document.body.classList.add("is-kokina");
+      const snowfallLayer = document.getElementById("snowfall");
+      // CSS-only motion, deterministic placement; no intervals or external assets.
+      for (let i = 0; i < 42; i++) {
+        const flake = document.createElement("span");
+        flake.className = "snowflake";
+        flake.style.setProperty("--x", ((i * 47.37) % 100).toFixed(2) + "%");
+        flake.style.setProperty("--size", (2 + (i % 5) * .8) + "px");
+        flake.style.setProperty("--opacity", (.36 + (i % 5) * .11).toFixed(2));
+        flake.style.setProperty("--duration", (9 + (i % 9) * 1.9) + "s");
+        flake.style.setProperty("--delay", (-i * 1.13) + "s");
+        flake.style.setProperty("--drift", ((i % 2 ? 1 : -1) * (12 + (i % 7) * 8)) + "px");
+        snowfallLayer.appendChild(flake);
+      }
+    }
+
     const root = document.documentElement;
     root.style.setProperty("--accent",p.accent);
     root.style.setProperty("--accent-dark",p.accentDark);
