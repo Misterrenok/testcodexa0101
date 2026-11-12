@@ -71,6 +71,8 @@
       .holiday-tl{width:100px}.holiday-tr{width:98px}
       .holiday-bl{width:93px}.holiday-br{width:90px}
     }
+    body.is-kapisusu h1{font-size:37px;letter-spacing:-.042em}
+    @media(max-width:420px){body.is-kapisusu h1{font-size:33px}}
     @media(prefers-reduced-motion:reduce){.snowflake{animation:none;display:none}}
   </style>
 </head>
@@ -165,6 +167,14 @@
         accent:"#b63b49", accentDark:"#7c2435", soft:"#f9e9ed", line:"#ead4d7",
         bg1:"#fcfaf8", bg2:"#f4eeed", orb1:"rgba(184,66,80,.15)", orb2:"rgba(63,116,74,.14)", theme:"#faf3f2"
       },
+      kapisusu: {
+        title: "KAPI SÜSÜ<br>HAZIRLAMA KİTİ",
+        plain: "Kapı Süsü Hazırlama Kiti",
+        video: "https://youtube.com/shorts/Mrovql9hlEI?feature=share",
+        buy: "https://www.shopier.com/ciceksonil_malzmlr/52859881",
+        accent:"#b43b49", accentDark:"#7c2435", soft:"#f9e9ed", line:"#ead4d7",
+        bg1:"#fcfaf8", bg2:"#f4eeed", orb1:"rgba(184,66,80,.15)", orb2:"rgba(63,116,74,.14)", theme:"#faf3f2"
+      },
       lavanta: {
         title: "LAVANTA<br>BUKETİ",
         plain: "Lavanta Buketi",
@@ -193,7 +203,8 @@
     const key = new URLSearchParams(location.search).get("p") || "lavanta";
     const p = products[key] || products.lavanta;
 
-    if (key === "kokina") {
+    if (key === "kapisusu") document.body.classList.add("is-kapisusu");
+    if (key === "kokina" || key === "kapisusu") {
       document.body.classList.add("is-kokina");
       const snowfallLayer = document.getElementById("snowfall");
       // CSS-only motion, deterministic placement; no intervals or external assets.
