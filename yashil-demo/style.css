@@ -181,3 +181,102 @@ body{background:#050505;line-height:1.58}
 @media(prefers-reduced-motion:reduce){
  .hero-photo .face,.model-card:hover .model-image .face{transition:none;transform:none!important}
 }
+
+
+/* Mobile art direction v4: one deliberate full-bleed editorial hero.
+   The photograph stays visible while the message and CTA remain above the fold. */
+img.face{background:none!important;background-image:none!important}
+.hero-photo .face{background:none!important}
+@media(max-width:700px){
+  .hero{
+    display:block;
+    position:relative;
+    isolation:isolate;
+    min-height:clamp(640px,calc(100svh - 70px),840px);
+    overflow:hidden;
+    background:#070707;
+  }
+  .hero-photo{
+    position:absolute!important;
+    inset:0!important;
+    display:block;
+    z-index:0;
+    width:100%;
+    height:100%!important;
+    min-height:0;
+    opacity:1;
+    grid-column:auto;
+    background:#252321;
+  }
+  .hero-photo .face{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center 18%;
+    filter:contrast(1.06) saturate(.95) brightness(.94);
+  }
+  .hero-photo::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,.08) 31%,rgba(0,0,0,.50) 54%,rgba(0,0,0,.91) 77%,#080808 100%),
+      linear-gradient(90deg,rgba(0,0,0,.23),rgba(0,0,0,0) 82%);
+    pointer-events:none;
+  }
+  .hero-photo-label{display:none!important}
+  .hero-main{
+    position:relative;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    min-height:inherit;
+    width:100%;
+    padding:25px 22px 25px;
+    background:transparent!important;
+  }
+  .hero-topline{font-size:10px;color:#fafafa;letter-spacing:.12em;margin-bottom:12px}
+  .hero-topline-num{color:#e7e7e7;white-space:nowrap}
+  .hero-content{margin-top:auto;padding:0 0 5px}
+  .hero-content .eyebrow{display:block;margin-bottom:16px;color:#d5d5d5;font-size:10px;letter-spacing:.11em}
+  .hero h1.hero-title{
+    font-size:clamp(48px,12.8vw,80px);
+    line-height:.89;
+    letter-spacing:-.055em;
+    max-width:100%;
+    text-wrap:balance;
+    overflow-wrap:normal;
+    margin:0 0 22px;
+    text-shadow:0 2px 16px rgba(0,0,0,.35);
+  }
+  .hero-description{
+    color:#eeeeee;
+    font-size:clamp(13px,3.4vw,16px);
+    line-height:1.55;
+    max-width:335px;
+    margin:0 0 24px;
+  }
+  .hero-actions{gap:20px;align-items:center}
+  .hero-actions .btn{min-height:50px;padding:13px 19px;letter-spacing:.09em}
+  .hero-secondary{color:#fff;text-decoration-color:var(--lime)}
+  .hero-bottomline{display:none}
+  .models-section{padding-top:70px}
+}
+@media(max-width:450px){
+  .hero{min-height:clamp(640px,calc(100svh - 70px),820px)}
+  .hero-photo{height:100%!important}
+  .hero h1.hero-title{font-size:clamp(47px,12.7vw,58px)}
+  .hero-content .eyebrow{font-size:9px}
+  .models-section .section-heading{margin-bottom:27px}
+  .models-section .section-heading h2{font-size:clamp(51px,12vw,67px)}
+  .models-section .model-grid{gap:28px}
+}
+@media(max-width:350px){
+  .hero-main{padding-inline:17px}
+  .hero h1.hero-title{font-size:44px}
+  .hero-actions .btn{font-size:10px}
+  .hero-description{font-size:13px}
+}
