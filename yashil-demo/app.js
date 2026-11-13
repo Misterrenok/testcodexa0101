@@ -8,6 +8,7 @@ let view=new URLSearchParams(location.search).get('view')||'home';
 let modelId=new URLSearchParams(location.search).get('id');
 const isAdmin=location.pathname.includes('/admin/');
 let adminTab='models',adminEditing=null,filter='all',menuOpen=false,flash='',sent=false;
+let featuredIndex=0;
 const dict={
 ru:{menu:'Меню',models:'Модели',ugc:'UGC',production:'Продакшн',about:'О нас',contacts:'Контакты',selection:'Подборка',heroTag:'Креативная студия / Новые лица',hero:'НОВЫЕ<br>ЛИЦА.<br><span class="lime">НОВАЯ</span><br>ЭНЕРГИЯ.',heroCopy:'Мы соединяем выразительные лица, смелые идеи и контент, который невозможно пролистать.',viewModels:'Смотреть моделей',selected:'Выбрано',featured:'Лица YASHIL',featuredTitle:'СВОИ<br>ГЕРОИ.',featuredText:'Выбирайте лица для кампании. Добавляйте в подборку и расскажите о проекте.',browseAll:'Весь каталог',services:'Что мы делаем',serviceModels:'MODELS',serviceModelsText:'Подбор моделей под характер вашего бренда.',serviceUGC:'UGC / SMM',serviceUGCText:'Нативный контент и системное присутствие бренда.',serviceProd:'PRODUCTION',serviceProdText:'Съёмка роликов, которые хочется досмотреть.',learn:'Подробнее',statement:'БРЕНДАМ НЕ НУЖНО БОЛЬШЕ ШУМА.<br>ИМ НУЖЕН <span style="color:white">ХАРАКТЕР.</span>',statementTag:'Наш подход',all:'Все',women:'Девушки',men:'Парни',creators:'Креаторы',add:'Добавить',remove:'Убрать',height:'Рост',hair:'Волосы',eyes:'Глаза',age:'Возраст',cm:'см',details:'Подробнее',back:'← К каталогу',aboutModel:'О модели',profile:'Профиль',ourWork:'Наши работы',ugcLead:'КОНТЕНТ, КОТОРОМУ<br>ВЕРЯТ.',ugcDesc:'UGC, стратегия, продюсирование и SMM. Мы делаем контент живым, а бренды — заметными.',prodLead:'КАЖДЫЙ КАДР<br>ИМЕЕТ ЗНАЧЕНИЕ.',prodDesc:'От концепции до финального монтажа. Снимаем вертикальные ролики, рекламные кампании и короткие истории.',aboutLead:'МЫ —<br>YASHIL.',aboutDesc:'Независимая креативная студия на пересечении модельного бизнеса, контента и продакшна. Объединяем талант и хорошую идею.',aboutNote:'В центре каждой работы — люди и их индивидуальность. Мы не продаём одинаковые картинки.',contactLead:'ЕСТЬ ИДЕЯ?<br><span class="lime">ДАВАЙТЕ.</span>',contactDesc:'Расскажите о съёмке, кампании или сотрудничестве. Ответим удобным способом.',name:'Имя',method:'Способ связи',contact:'Контакт',comment:'Комментарий',telegram:'Telegram',phone:'Телефон',email:'Email',send:'Оставить заявку',privacy:'Это демоверсия: вводите только вымышленные контакты. Ничего не отправляется студии; тестовая заявка хранится только в вашем браузере.',demoAlert:'ДЕМО: заявка сохраняется только в этом браузере. Telegram и email уведомления не отправляются.',demoSaved:'Демо-заявка сохранена локально. Никто из студии её не получил.',required:'Укажите имя и контакт.',rate:'Повторите через минуту.',emptySelection:'В подборке пока пусто.',selectionTitle:'ВАШ<br>ВЫБОР.',selectionDesc:'Соберите команду мечты и отправьте запрос.',goModels:'Выбрать моделей',sendingFor:'Модели в запросе',demo:'Демонстрация',noModels:'В этой категории моделей пока нет.',footer:'Новые лица. Новые истории.',portfolio1:'Кампания / Движение',portfolio2:'UGC / Жизнь в кадре',portfolio3:'Бренд / История',typeName:'Название',team:'Команда',teamText:'Креативные продюсеры, фотографы, авторы и модели. Команда подбирается под каждый проект.',soon:'Примеры работ — демонстрационные концепции. Реальное портфолио студия добавит позднее.'},
 en:{menu:'Menu',models:'Models',ugc:'UGC',production:'Production',about:'About',contacts:'Contacts',selection:'Shortlist',heroTag:'Creative studio / New faces',hero:'NEW<br>FACES.<br><span class="lime">NEW</span><br>ENERGY.',heroCopy:'We connect expressive faces, bold ideas and content you cannot scroll past.',viewModels:'Explore models',selected:'Selected',featured:'YASHIL faces',featuredTitle:'REAL<br>CHARACTER.',featuredText:'Find talent for your next campaign. Build a shortlist and tell us about the project.',browseAll:'Full roster',services:'What we do',serviceModels:'MODELS',serviceModelsText:'Fresh talent selected for your brand identity.',serviceUGC:'UGC / SMM',serviceUGCText:'Authentic content and a consistent social presence.',serviceProd:'PRODUCTION',serviceProdText:'Films worth watching until the last frame.',learn:'Explore',statement:'BRANDS DO NOT NEED MORE NOISE.<br>THEY NEED <span style="color:white">CHARACTER.</span>',statementTag:'Our point of view',all:'All',women:'Women',men:'Men',creators:'Creators',add:'Add',remove:'Remove',height:'Height',hair:'Hair',eyes:'Eyes',age:'Age',cm:'cm',details:'View profile',back:'← Back to roster',aboutModel:'About',profile:'Profile',ourWork:'Selected work',ugcLead:'CONTENT THAT<br>CONNECTS.',ugcDesc:'UGC, strategy, production and SMM. We make content feel alive and brands stand out.',prodLead:'EVERY FRAME<br>MATTERS.',prodDesc:'From a fresh idea to the final edit. Vertical films, advertising and short-form stories.',aboutLead:'WE ARE<br>YASHIL.',aboutDesc:'An independent creative studio where talent, storytelling and production meet.',aboutNote:'At the heart of our work are real people and their individuality. No cookie-cutter content.',contactLead:'HAVE AN IDEA?<br><span class="lime">LET’S TALK.</span>',contactDesc:'Tell us about your shoot, campaign or collaboration.',name:'Name',method:'Contact method',contact:'Contact details',comment:'Message',telegram:'Telegram',phone:'Phone',email:'Email',send:'Send inquiry',privacy:'This is a demo: enter fictional contact details only. Nothing is sent to the studio; test inquiries stay in your browser.',demoAlert:'DEMO: inquiries are stored only in this browser. No Telegram or email notifications.',demoSaved:'Demo inquiry saved locally. The studio has not received it.',required:'Please enter your name and contact.',rate:'Try again in a minute.',emptySelection:'Your shortlist is empty.',selectionTitle:'YOUR<br>SHORTLIST.',selectionDesc:'Build your ideal cast and tell us about the project.',goModels:'Browse models',sendingFor:'Models in this inquiry',demo:'Demo only',noModels:'No models in this category yet.',footer:'New faces. New stories.',portfolio1:'Campaign / Motion',portfolio2:'UGC / Everyday',portfolio3:'Brand / Story',typeName:'Title',team:'Our team',teamText:'Creative producers, photographers, artists and models. Every project gets its own crew.',soon:'Sample concepts for demonstration. The studio will add its own portfolio later.'},
@@ -63,15 +64,96 @@ function modelCard(m){let added=state.selection.includes(m.id);
 return '<article class="model-card"><div class="model-image"><a aria-label="'+t('details')+' '+esc(localized(m.name))+'" href="'+detailLink(m.id)+'" data-model="'+esc(m.id)+'">'+face(m)+'</a><span class="tag">'+esc(t(m.category)).toUpperCase()+'</span><button class="add" data-toggle="'+esc(m.id)+'" aria-label="'+esc((added?t('remove'):t('add'))+' '+localized(m.name))+'">'+(added?'✓':'+')+'</button></div><div class="model-meta"><div><a href="'+detailLink(m.id)+'" data-model="'+esc(m.id)+'"><h3>'+esc(localized(m.name))+'</h3></a><p>'+esc(t(m.category))+' / '+esc(m.spec?.height||'—')+' '+t('cm')+'</p></div><a href="'+detailLink(m.id)+'" data-model="'+esc(m.id)+'" aria-label="'+t('details')+'">↗</a></div></article>'}
 const grid=(arr)=>arr.length?'<div class="model-grid">'+arr.map(modelCard).join('')+'</div>':'<div class="empty">'+t('noModels')+'</div>';
 const activeModels=()=>state.models.filter(m=>m.visible);
+
+function featuredCard(m){
+  const added=state.selection.includes(m.id);
+  const title=esc(localized(m.name));
+  const toggle=esc(m.id);
+  return '<article class="feature-model">'+
+    '<a class="feature-model-photo" href="'+detailLink(m.id)+'" data-model="'+toggle+'" aria-label="'+t('details')+' '+title+'">'+face(m)+'</a>'+
+    '<span class="feature-model-category">'+esc(t(m.category)).toUpperCase()+'</span>'+
+    '<button class="feature-heart" data-toggle="'+toggle+'" aria-label="'+esc((added?t('remove'):t('add'))+' '+localized(m.name))+'">'+(added?'♥':'♡')+'</button>'+
+    '<div class="feature-model-copy"><a class="feature-name" href="'+detailLink(m.id)+'" data-model="'+toggle+'">'+title+'</a>'+
+    '<span class="feature-spec">'+esc(t(m.category)).toUpperCase()+' / '+esc(m.spec?.height||'—')+' '+t('cm').toUpperCase()+'</span></div>'+
+    '<button class="feature-plus" data-toggle="'+toggle+'" aria-label="'+esc((added?t('remove'):t('add'))+' '+localized(m.name))+'">'+(added?'✓':'+')+'</button>'+
+  '</article>';
+}
 function home(){
-const models=activeModels().slice(0,3);
-const heroTitle={ru:'НЕ ПРОСТО<br><span class="lime">ЛИЦА.</span>',en:'MORE THAN<br><span class="lime">FACES.</span>',tm:'DIŇE KEŞP<br><span class="lime">DÄL.</span>'}[lang];
-const heroIntro={ru:'Модели, контент и продакшн с собственным характером. Находим лица и создаём истории, которые остаются в памяти.',en:'Models, content and production with a distinct point of view. We discover talent and create stories that stay with you.',tm:'Özboluşly modeller, mazmun we prodakşn. Täze keşpleri tapýarys we ýatda galýan hekaýalary döredýäris.'}[lang];
-return '<main id="main"><section class="hero"><div class="hero-main"><div class="hero-topline"><span class="hero-dot"></span> YASHIL / CREATIVE STUDIO <span class="hero-topline-num">001 — 026</span></div><div class="hero-content"><div class="eyebrow">'+t('heroTag')+'</div><h1 class="hero-title">'+heroTitle+'</h1><p class="hero-description">'+heroIntro+'</p><div class="hero-actions">'+button(t('viewModels')+' <span aria-hidden="true">↗</span>','models','btn')+button(t('about')+' ↗','about','hero-secondary')+'</div></div><div class="hero-bottomline"><span>MODELS</span><span>CONTENT</span><span>PRODUCTION</span></div></div><div class="hero-photo">'+face(state.models[0]||initialModels[0],'hero-face')+'<div class="hero-photo-label"><span>YASHIL / TALENT 001</span><span>CREATIVE STUDIO · 2026</span></div></div></section>'+ticker()+
-'<section class="section wrap models-section"><div class="section-heading"><div><div class="eyebrow">01 / '+t('featured')+'</div><h2>'+t('featuredTitle')+'</h2></div><div class="section-heading-aside"><p>'+t('featuredText')+'</p>'+button(t('browseAll')+' ↗','models','btn ghost')+'</div></div>'+grid(models)+'</section>'+
-'<section class="section wrap bordered"><div class="eyebrow">02 / '+t('services')+'</div><div class="services">'+[['01',t('serviceModels'),t('serviceModelsText'),'models'],['02',t('serviceUGC'),t('serviceUGCText'),'ugc'],['03',t('serviceProd'),t('serviceProdText'),'production']].map(a=>'<article class="service"><div class="service-num">'+a[0]+' / YASHIL</div><div><h3>'+a[1]+'</h3><p>'+a[2]+'</p></div><a href="'+link(a[3])+'" data-nav="'+a[3]+'">'+t('learn')+' ↗</a></article>').join('')+'</div></section>'+
-'<section class="statement"><div class="wrap"><div class="eyebrow">'+t('statementTag')+'</div><h2>'+t('statement')+'</h2></div></section>'+
-'<section class="section wrap split final-invite"><h2>'+({ru:'СОЗДАДИМ<br><span class="lime">ВМЕСТЕ.</span>',en:'LET’S MAKE<br><span class="lime">SOMETHING.</span>',tm:'BILELIKDE<br><span class="lime">DÖREDELIŇ.</span>'}[lang])+'</h2><div><p>'+t('contactDesc')+'</p>'+button(t('contacts')+' ↗','contacts')+'</div></section>'+renderBlocks('home')+'</main>'}
+ const talent=activeModels();
+ const mobile=window.matchMedia('(max-width:640px)').matches;
+ const tablet=window.matchMedia('(max-width:900px)').matches;
+ const visibleCount=mobile?1:(tablet?2:3);
+ const maxStart=Math.max(0,talent.length-visibleCount);
+ featuredIndex=Math.max(0,Math.min(featuredIndex,maxStart));
+ const displayModels=talent.slice(featuredIndex,featuredIndex+visibleCount);
+ const title={
+  ru:'НОВЫЕ<br>ЛИЦА.<br><span class="lime">НОВАЯ</span><br>ЭНЕРГИЯ.',
+  en:'NEW<br>FACES.<br><span class="lime">NEW</span><br>ENERGY.',
+  tm:'TÄZE<br>KEŞPLER.<br><span class="lime">TÄZE</span><br>ENERGIÝA.'
+ }[lang];
+ const intro={
+  ru:'Мы соединяем выразительные лица, смелые идеи и контент, который невозможно пролистать.',
+  en:'We bring expressive talent, bold ideas and content worth stopping for.',
+  tm:'Täze keşpleri, batyrgaý pikirleri we ýatda galýan mazmuny birleşdirýäris.'
+ }[lang];
+ const serviceHeading={
+  ru:'ЧЕМ МЫ<br>ЗАНИМАЕМСЯ',
+  en:'WHAT<br>WE DO',
+  tm:'BIZ NÄME<br>EDÝÄRIS'
+ }[lang];
+ const serviceIntro={
+  ru:'Три направления, один стандарт — качественный креатив и сильные результаты.',
+  en:'Three disciplines, one standard — thoughtful creative work and striking results.',
+  tm:'Üç ugur, bir standart — ýokary hilli döredijilik we täsirli netijeler.'
+ }[lang];
+ const serviceCards=[
+  {id:'models',asset:'service-models.webp',title:'MODELS',copy:{ru:'Модельное агентство. Подбор лиц для ваших проектов.',en:'Talent management and casting for your projects.',tm:'Modelleri saýlamak we taslamaňyza laýyk keşpler.'}},
+  {id:'ugc',asset:'service-ugc.webp',title:'UGC & SMM',copy:{ru:'Контент, который продаёт. Идеи, съёмка, продвижение.',en:'Human stories, content and social media.',tm:'Mazmun, wideo we sosial media hyzmatlary.'}},
+  {id:'production',asset:'service-production.webp',title:'PRODUCTION',copy:{ru:'Съёмка роликов и рекламных проектов под ключ.',en:'Creative video and advertising production.',tm:'Wideo we mahabat önümçiligi.'}}
+ ];
+ const services=serviceCards.map(x=>
+  '<a class="ref-service-tile" href="'+link(x.id)+'" data-nav="'+x.id+'">'+
+  '<img src="'+BASE+'assets/'+x.asset+'" alt="" loading="lazy" decoding="async">'+
+  '<div class="ref-service-copy"><div class="ref-service-name"><span class="ref-slash">/</span>'+x.title+'</div>'+
+  '<div class="ref-service-details"><span>'+esc(x.copy[lang]||x.copy.ru)+'</span><span class="ref-tile-arrow" aria-hidden="true">↗</span></div></div></a>'
+ ).join('');
+ const featuredHeading={ru:'СВОИ ГЕРОИ.',en:'OUR PEOPLE.',tm:'BIZIŇ KEŞPLER.'}[lang];
+ const featuredIntro={ru:'Выбирайте лица для кампании. Добавляйте в подборку и расскажите о проекте.',en:'Choose the faces for your campaign. Shortlist talent and tell us your idea.',tm:'Taslamaňyz üçin modelleri saýlap, sanawa goşuň.'}[lang];
+ const aboutHeading={ru:'О СТУДИИ<br><span>YASHIL</span>',en:'ABOUT<br><span>YASHIL</span>',tm:'YASHIL<br><span>BARADA</span>'}[lang];
+ const aboutCopy={ru:'Креативная студия на стыке моды, контента и продакшна. Создаём проекты, в которых люди, идеи и визуал работают вместе.',en:'A creative studio connecting talent, content and production — with people at its center.',tm:'Model, mazmun we prodakşny birleşdirýän döredijilik studiýasy.'}[lang];
+ const closingHeading={ru:'ДАВАЙТЕ<br>СОЗДАДИМ <span>ВМЕСТЕ?</span>',en:'LET’S<br>MAKE IT <span>TOGETHER.</span>',tm:'GELIŇ,<br><span>BILELIKDE</span> DÖREDELIŇ.'}[lang];
+ const indexButtons=Array.from({length:maxStart+1},(_,i)=>
+  '<button type="button" class="ref-dot '+(featuredIndex===i?'on':'')+'" data-feature-index="'+i+'" aria-label="'+(i+1)+'" aria-current="'+(featuredIndex===i?'true':'false')+'"></button>'
+ ).join('');
+ return '<main id="main" class="reference-home">'+
+  '<section class="hero ref-hero"><div class="hero-main">'+
+   '<div class="eyebrow ref-hero-eyebrow">'+t('heroTag')+' / 001</div>'+
+   '<h1 class="hero-title">'+title+'</h1>'+
+   '<p class="hero-description">'+intro+'</p>'+
+   button(t('viewModels')+' <span aria-hidden="true">→</span>','models','btn ref-hero-button')+
+  '</div><div class="hero-photo">'+face(state.models[0]||initialModels[0],'hero-face')+
+   '<div class="hero-photo-label"><span>╱ &nbsp; CREATIVE / TALENT / CONTENT</span><span>EST. 2026</span></div>'+
+  '</div></section>'+
+  ticker()+
+  '<section class="ref-services wrap"><div class="ref-section-top"><div><div class="eyebrow">'+t('services')+'</div><h2>'+serviceHeading+'</h2></div><p>'+serviceIntro+'</p></div>'+
+   '<div class="ref-service-grid">'+services+'</div></section>'+
+  '<section class="ref-featured wrap"><div class="ref-featured-head"><div><div class="eyebrow">01 / '+t('featured')+'</div><h2>'+featuredHeading+'</h2></div>'+
+   '<p>'+featuredIntro+'</p>'+button(t('browseAll')+' ↗','models','btn ghost ref-browse')+'</div>'+
+   '<div class="ref-featured-grid">'+displayModels.map(featuredCard).join('')+'</div>'+
+   '<div class="ref-slider-controls"><button type="button" class="ref-prev" data-feature-step="-1" '+(featuredIndex===0?'disabled':'')+' aria-label="Previous models">‹</button>'+
+   '<div class="ref-dots">'+indexButtons+'</div>'+
+   '<button type="button" class="ref-next" data-feature-step="1" '+(featuredIndex>=maxStart?'disabled':'')+' aria-label="Next models">›</button></div>'+
+  '</section>'+
+  '<section class="ref-about-strip"><div class="ref-about-inner wrap"><h2>'+aboutHeading+'</h2>'+
+   '<div class="ref-about-copy"><p>'+aboutCopy+'</p><a href="'+link('about')+'" data-nav="about">'+t('learn')+' ↗</a></div>'+
+   '<div class="ref-about-facts"><div><strong>03</strong><small>'+({ru:'НАПРАВЛЕНИЯ',en:'DISCIPLINES',tm:'UGUR'}[lang])+'</small></div>'+
+   '<div><strong>RU<br>EN<br>TM</strong><small>'+({ru:'ЯЗЫКИ',en:'LANGUAGES',tm:'DILLER'}[lang])+'</small></div>'+
+   '<div><strong>01</strong><small>'+({ru:'СТУДИЯ',en:'STUDIO',tm:'STUDIÝA'}[lang])+'</small></div></div>'+
+   '</div></section>'+
+  '<section class="ref-contact-banner"><div class="ref-contact-inner wrap"><h2>'+closingHeading+'</h2>'+
+   button(t('contacts')+' ↗','contacts','btn ghost')+'</div></section>'+
+  renderBlocks('home')+'</main>';
+}
 function modelsPage(){const mods=activeModels().filter(m=>filter==='all'||m.category===filter);
 const catalogHeading={ru:'НАШИ<br><span class="lime">МОДЕЛИ.</span>',en:'OUR<br><span class="lime">FACES.</span>',tm:'BIZIŇ<br><span class="lime">MODELLER.</span>'}[lang];
 return '<main id="main" class="wrap"><div class="page-hero"><div class="eyebrow">YASHIL / TALENT ROSTER</div><h1>'+catalogHeading+'</h1><p>'+t('featuredText')+'</p></div><div class="filters">'+['all','women','men','creators'].map(c=>'<button class="chip '+(c===filter?'active':'')+'" data-filter="'+c+'">'+t(c)+'</button>').join('')+'</div>'+grid(mods)+'<div style="height:110px"></div>'+renderBlocks('models')+'</main>'}
@@ -93,6 +175,8 @@ function bind(){app.querySelectorAll('[data-nav]').forEach(el=>el.addEventListen
 app.querySelectorAll('[data-model]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();modelId=el.dataset.model;view='model';history.pushState({},'',detailLink(modelId));render();window.scrollTo(0,0)}));
 app.querySelectorAll('[data-toggle]').forEach(el=>el.addEventListener('click',()=>{let id=el.dataset.toggle;state.selection=state.selection.includes(id)?state.selection.filter(x=>x!==id):[...state.selection,id];save();render()}));
 app.querySelectorAll('[data-filter]').forEach(el=>el.addEventListener('click',()=>{filter=el.dataset.filter;render()}));
+app.querySelectorAll('[data-feature-step]').forEach(el=>el.addEventListener('click',()=>{featuredIndex+=Number(el.dataset.featureStep);render()}));
+app.querySelectorAll('[data-feature-index]').forEach(el=>el.addEventListener('click',()=>{featuredIndex=Number(el.dataset.featureIndex);render()}));
 const langEl=app.querySelector('#lang-switch');if(langEl)langEl.addEventListener('change',e=>{lang=e.target.value;location.href=BASE+lang+'/?view='+encodeURIComponent(view)+(modelId&&view==='model'?'&id='+encodeURIComponent(modelId):'')});
 const m=app.querySelector('#mobile-menu');if(m)m.addEventListener('click',()=>{menuOpen=!menuOpen;render()});
 const f=app.querySelector('#inquiry-form');
