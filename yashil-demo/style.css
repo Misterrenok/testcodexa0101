@@ -444,3 +444,15 @@ body{background:#050505;line-height:1.58}
  .cinema-mobile-services a{display:block;color:#fff;text-decoration:none}
  .cinema-mobile-services a:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
 }
+
+
+/* v9 — cleaned mobile portrait; no image-baked labels or double neon stripe */
+@media(max-width:900px){
+ .cinema-photo img{object-fit:cover;object-position:center top;filter:contrast(1.08) brightness(.93)}
+ .cinema-stripe{display:none}
+ .cinema-mobile-services{top:11%;left:20px;padding-left:24px;background:linear-gradient(90deg,#050505df 0%,#05050560 70%,transparent 100%);color:#fff}
+ .cinema-mobile-bottom{bottom:4.8%}
+ .cinema-mobile-word{font-size:clamp(91px,30vw,138px);transform:scaleX(.87);transform-origin:left;max-width:100%}
+ .cinema-mobile-copy{font-size:15px}
+}
+@media(max-width:360px){.cinema-mobile-word{font-size:30vw;transform:scaleX(.86)}}

@@ -127,8 +127,8 @@ function home(){
  ).join('');
  return '<main id="main" class="reference-home">'+
   '<section class="cinema-hero" aria-label="YASHIL Creative Studio">'+
-    '<picture class="cinema-photo"><source media="(min-width:601px) and (max-width:900px)" srcset="'+BASE+'assets/hero-tablet.webp">'+
-    '<source media="(max-width:600px)" srcset="'+BASE+'assets/hero-mobile.webp">'+
+    '<picture class="cinema-photo"><source media="(min-width:601px) and (max-width:900px)" srcset="'+BASE+'assets/hero-mobile-clean-v9.webp">'+
+    '<source media="(max-width:600px)" srcset="'+BASE+'assets/hero-mobile-clean-v9.webp">'+
     '<img src="'+BASE+'assets/hero-desktop.webp" alt="" width="600" height="782" loading="eager" decoding="async" fetchpriority="high"></picture>'+
     '<span class="cinema-stripe" aria-hidden="true"></span>'+
     '<h1 class="cinema-desktop-word" aria-label="YASHIL"><span>YA</span><span>SHIL</span></h1>'+
