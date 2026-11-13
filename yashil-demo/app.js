@@ -126,14 +126,30 @@ function home(){
   '<button type="button" class="ref-dot '+(featuredIndex===i?'on':'')+'" data-feature-index="'+i+'" aria-label="'+(i+1)+'" aria-current="'+(featuredIndex===i?'true':'false')+'"></button>'
  ).join('');
  return '<main id="main" class="reference-home">'+
-  '<section class="hero ref-hero"><div class="hero-main">'+
-   '<div class="eyebrow ref-hero-eyebrow">'+t('heroTag')+' / 001</div>'+
-   '<h1 class="hero-title">'+title+'</h1>'+
-   '<p class="hero-description">'+intro+'</p>'+
-   button(t('viewModels')+' <span aria-hidden="true">→</span>','models','btn ref-hero-button')+
-  '</div><div class="hero-photo">'+face(state.models[0]||initialModels[0],'hero-face')+
-   '<div class="hero-photo-label"><span>╱ &nbsp; CREATIVE / TALENT / CONTENT</span><span>EST. 2026</span></div>'+
-  '</div></section>'+
+  '<section class="cinema-hero" aria-label="YASHIL Creative Studio">'+
+    '<picture class="cinema-photo"><source media="(min-width:601px) and (max-width:900px)" srcset="'+BASE+'assets/hero-tablet.webp">'+
+    '<source media="(max-width:600px)" srcset="'+BASE+'assets/hero-mobile.webp">'+
+    '<img src="'+BASE+'assets/hero-desktop.webp" alt="" width="600" height="782" loading="eager" decoding="async" fetchpriority="high"></picture>'+
+    '<span class="cinema-stripe" aria-hidden="true"></span>'+
+    '<h1 class="cinema-desktop-word" aria-label="YASHIL"><span>YA</span><span>SHIL</span></h1>'+
+    '<div class="cinema-studio-label">╱ CREATIVE<br>STUDIO</div>'+
+    '<div class="cinema-desktop-services">MODEL MANAGEMENT <b>/</b> UGC &amp; SMM <b>/</b> CONTENT PRODUCTION</div>'+
+    '<nav class="cinema-mobile-services" aria-label="Studio directions">'+
+      '<a href="'+link('models')+'" data-nav="models">MODELS</a>'+
+      '<a href="'+link('ugc')+'" data-nav="ugc">UGC &amp; SMM</a>'+
+      '<a href="'+link('production')+'" data-nav="production">PRODUCTION</a>'+
+    '</nav>'+
+    '<div class="cinema-mobile-bottom">'+
+      '<h1 class="cinema-mobile-word">YASHIL</h1>'+
+      '<div class="cinema-mobile-sub">CREATIVE STUDIO</div>'+
+      '<p class="cinema-mobile-copy">'+({ru:'ЛЮДИ. КОНТЕНТ.<br>ПРОЕКТЫ.',en:'PEOPLE. CONTENT.<br>PROJECTS.',tm:'ADAMLAR. MAZMUN.<br>TASLAMALAR.'}[lang])+'</p>'+
+      '<div class="cinema-mobile-actions">'+
+         button(t('viewModels')+' <span aria-hidden="true">→</span>','models','cinema-mobile-cta')+
+         '<span class="cinema-mobile-count" aria-hidden="true">01<i></i><span>/ 03</span></span>'+
+      '</div>'+
+      '<span class="cinema-scroll" aria-hidden="true">⌄</span>'+
+    '</div>'+
+  '</section>'+
   ticker()+
   '<section class="ref-services wrap"><div class="ref-section-top"><div><div class="eyebrow">'+t('services')+'</div><h2>'+serviceHeading+'</h2></div><p>'+serviceIntro+'</p></div>'+
    '<div class="ref-service-grid">'+services+'</div></section>'+
