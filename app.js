@@ -1,6 +1,6 @@
 
 (()=>{'use strict';
-const BASE='/testcodexa0101/yashil-demo/';
+const BASE=new URL(document.baseURI).pathname;
 const DEMO_KEY='yashil-demo-v1';
 const langFromPath=()=>{let p=location.pathname.split('/').filter(Boolean);return ['ru','en','tm'].includes(p[p.length-1])?p[p.length-1]:['ru','en','tm'].includes(p[p.length-2])?p[p.length-2]:'ru'};
 let lang=langFromPath();
@@ -46,7 +46,7 @@ const safeExternalUrl=(v)=>{try{const u=new URL(String(v||''));return u.protocol
 const contactError=()=>({ru:'Проверьте контакт: Telegram — @username, телефон — минимум 8 цифр, email — example@domain.com.',en:'Check contact: Telegram @username, phone at least 8 digits, or a valid email address.',tm:'Habarlaşmak maglumatyny barlaň: Telegram @username, telefon azyndan 8 san ýa-da dogry email.'}[lang]);
 const esc=(x)=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const app=document.getElementById('app');
-const face=(m,cls='')=>{const n=((m.face||0)%6)+1;const p=m.photos?.[m.coverIndex||0];const src=p||BASE+'assets/model-hq-'+n+'.webp';const mode=cls==='hero-face'?'eager':'lazy';return '<img class="face '+cls+'" src="'+esc(src)+'" width="480" height="600" alt="'+esc(localized(m.name))+'" loading="'+mode+'" decoding="async">'};
+const face=(m,cls='')=>{const n=((m.face||0)%6)+1;const p=m.photos?.[m.coverIndex||0];const src=p||BASE+'assets/model-ultra-'+n+'.webp';const mode=cls==='hero-face'?'eager':'lazy';return '<img class="face '+cls+'" src="'+esc(src)+'" width="1020" height="1020" alt="'+esc(localized(m.name))+'" loading="'+mode+'" decoding="async">'};
 const link=(v,id)=>BASE+lang+'/?view='+encodeURIComponent(v)+(id?'&id='+encodeURIComponent(id):'');
 const selectLink=()=>link('selection');
 const navigation=(v)=>{view=v;modelId=null;history.pushState({},'',link(v));render();window.scrollTo({top:0,behavior:'instant'})};
@@ -105,9 +105,9 @@ function home(){
   tm:'Üç ugur, bir standart — ýokary hilli döredijilik we täsirli netijeler.'
  }[lang];
  const serviceCards=[
-  {id:'models',asset:'service-models-ref-hq.webp',title:'MODELS',copy:{ru:'Модельное агентство. Подбор лиц для ваших проектов.',en:'Talent management and casting for your projects.',tm:'Modelleri saýlamak we taslamaňyza laýyk keşpler.'}},
-  {id:'ugc',asset:'service-ugc-ref-hq.webp',title:'UGC & SMM',copy:{ru:'Контент, который продаёт. Идеи, съёмка, продвижение.',en:'Human stories, content and social media.',tm:'Mazmun, wideo we sosial media hyzmatlary.'}},
-  {id:'production',asset:'service-production-ref-hq.webp',title:'PRODUCTION',copy:{ru:'Съёмка роликов и рекламных проектов под ключ.',en:'Creative video and advertising production.',tm:'Wideo we mahabat önümçiligi.'}}
+  {id:'models',asset:'service-models-v21.webp',title:'MODELS',copy:{ru:'Модельное агентство. Подбор лиц для ваших проектов.',en:'Talent management and casting for your projects.',tm:'Modelleri saýlamak we taslamaňyza laýyk keşpler.'}},
+  {id:'ugc',asset:'service-ugc-v21.webp',title:'UGC & SMM',copy:{ru:'Контент, который продаёт. Идеи, съёмка, продвижение.',en:'Human stories, content and social media.',tm:'Mazmun, wideo we sosial media hyzmatlary.'}},
+  {id:'production',asset:'service-production-v21.webp',title:'PRODUCTION',copy:{ru:'Съёмка роликов и рекламных проектов под ключ.',en:'Creative video and advertising production.',tm:'Wideo we mahabat önümçiligi.'}}
  ];
  const services=serviceCards.map(x=>
   '<a class="ref-service-tile" href="'+link(x.id)+'" data-nav="'+x.id+'">'+
@@ -248,7 +248,7 @@ function renderBlocks(page){return state.blocks.filter(b=>b.page===page&&b.visib
 function render(){document.documentElement.lang=lang;document.documentElement.style.setProperty('--lime',state.accent||'#A5EE12');const pixel=lang==='ru'&&view==='home'&&!isAdmin;document.body.classList.toggle('pixel-reference-home',pixel);document.documentElement.classList.toggle('pixel-reference-root',pixel);if(isAdmin){app.innerHTML=adminPage();bind();return}
 const body={home,models:modelsPage,model:profilePage,ugc:()=>worksPage('ugc'),production:()=>worksPage('production'),about:aboutPage,contacts:contactPage,selection:selectionPage};
 app.innerHTML=header()+(body[view]||home)()+footer()+(flash?'<div role="status" style="position:fixed;bottom:20px;left:20px;padding:15px;background:#A5EE12;color:#000;z-index:200;font-weight:bold">'+esc(flash)+'</div>':'');
-if(pixel){app.querySelector('.top')?.remove();const hero=app.querySelector('.cinema-hero');if(hero)hero.outerHTML=pixelHomeHero();const services=app.querySelector('.ref-services');if(services)services.insertAdjacentHTML('beforebegin',pixelLowerReference());}
+if(pixel){app.querySelector('.top')?.remove();const hero=app.querySelector('.cinema-hero');if(hero)hero.outerHTML=pixelHomeHero();/* The lower page is real HTML, not a compressed screenshot. */}
 bind()}
 function bind(){app.querySelectorAll('[data-nav]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();menuOpen=false;sent=false;navigation(el.dataset.nav)}));
 app.querySelectorAll('[data-model]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();modelId=el.dataset.model;view='model';history.pushState({},'',detailLink(modelId));render();window.scrollTo(0,0)}));
